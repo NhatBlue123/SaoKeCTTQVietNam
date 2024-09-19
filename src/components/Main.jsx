@@ -27,7 +27,7 @@ const Main = () => {
         .filter((item) => item !== null);
 
       setRowData(filteredData);
-    } else if (value === "VietTinBack 10-12") {
+    } else if (value === "VietTinBank 10-12") {
       const filteredData = jsonDataVTB
         .map((item) => {
           const match = item[0].match(
@@ -68,17 +68,17 @@ const Main = () => {
 
             return {
               ID: ID,
-              NgàyGiaoDịch: `${day}/${match[2]}/${match[3]} ${match[4]}`, // Reconstruct the valid date (e.g., "10/09/2024")
-              SốTiềnChuyển: item[2], // Transaction amount
-              NộiDungChiTiết: item[1] + " " + item[3], // Description of the transaction
+              NgàyGiaoDịch: `${day}/${match[2]}/${match[3]} ${match[4]}`,
+              SốTiềnChuyển: item[2],
+              NộiDungChiTiết: item[1] + " " + item[3],
             };
           }
         })
-        .filter((item) => item !== null); // Filter out any null values
+        .filter((item) => item !== null);
 
       setRowData(filteredData);
     }
-  }, [value]); // Re-run this effect whenever `value` changes
+  }, [value]); 
 
   const pagination = true;
   const paginationPageSize = 5;
@@ -101,7 +101,7 @@ const Main = () => {
         label="Chọn Ngân Hàng"
         value={value}
         onChange={(event) => setValue(event.currentTarget.value)}
-        data={["VietComBank 1-10", "VietTinBack 10-12", "VCB", "VCB"]}
+        data={["VietComBank 1-10", "VietTinBank 10-12", "VCB", "VCB"]}
       />
       <AgGridReact
         rowData={rowData}
