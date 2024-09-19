@@ -101,7 +101,7 @@ const Main = () => {
         label="Chọn Ngân Hàng"
         value={value}
         onChange={(event) => setValue(event.currentTarget.value)}
-        data={["VietComBank 1-10", "VietTinBank 10-12", "VCB", "VCB"]}
+        data={["VietComBank 1-10", "VietTinBank 10-12", "Coming Soon", "Coming Soon"]}
       />
       <AgGridReact
         rowData={rowData}
