@@ -40,12 +40,12 @@ const filteredData = jsonDataVTB
 
       return {
         ID: ID,
-        NgàyGiaoDịch: `${day}/${match[2]}/${match[3]} ${match[4]}`, // Reconstruct the valid date (e.g., "10/09/2024")
-        SốTiềnChuyển: item[2], // Transaction amount
-        NộiDungChiTiết: item[1] + " " + item[3], // Description of the transaction
+        NgàyGiaoDịch: `${day}/${match[2]}/${match[3]} ${match[4]}`,
+        SốTiềnChuyển: item[2],
+        NộiDungChiTiết: item[1] + " " + item[3],
       };
     }
   })
-  .filter((item) => item !== null); // Filter out any null values
+  .filter((item) => item !== null);
 
 console.log(filteredData);
