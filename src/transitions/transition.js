@@ -2,7 +2,7 @@ import fs from "fs";
 import { PdfDataParser } from "pdf-data-parser";
 
 async function main() {
-  const pdfPath = "../../data/MTTQ_10-12.pdf";
+  const pdfPath = "../../data/CT1-12BIDV.pdf";
 
   let parser = new PdfDataParser({
     url: pdfPath,
@@ -22,10 +22,11 @@ async function main() {
     "Ngày GD",
     "Số CT/ Doc No",
     "TNX Date",
+    "Chứng từ này được"
 
   ];
   const data = [];
-  for (let i = 4; i < rows.length; i++) {
+  for (let i = 12; i < rows.length; i++) {
     let rowString = JSON.stringify(rows[i]);
     if (!Array.isArray(rows[i]) || !rows[i]) {
       continue;
@@ -36,26 +37,26 @@ async function main() {
 
     if (!printedRows.has(rowString)) {
      data.push(rows[i]);
-      console.log(rows[i]);
+      // console.log(rows[i]);
       printedRows.add(rowString); // Thêm vào Set để đánh dấu đã in
     }
   }
   const dataLuu = [];
   for (let i = 0; i < data.length; i++) {
-    if (data[i][1] === undefined) {
-      if (data[i + 1].at(1) === undefined) {
-        if (data[i + 2].at(1) === undefined) {
-          data[i + 1][0] += " " + data[i + 2].at(0);
-        }
-        data[i][0] += " " + data[i + 1].at(0);
-      }
-      data[i - 1][2] = data[i - 1][2] + " " + data[i][0];
-      continue;
-    }
+    // if (data[i][1] === undefined) {
+    //   if (data[i + 1].at(1) === undefined) {
+    //     if (data[i + 2].at(1) === undefined) {
+    //       data[i + 1][0] += " " + data[i + 2].at(0);
+    //     }
+    //     data[i][0] += " " + data[i + 1].at(0);
+    //   }
+    //   data[i - 1][2] = data[i - 1][2] + " " + data[i][0];
+    //   continue;
+    // }
     dataLuu.push(data[i]);
   }
   
-  saveTransitison(dataLuu, "../../output/VCB1012.json");
+  saveTransitison(dataLuu, "../../output/BIDV112.json");
 }
 main();
 

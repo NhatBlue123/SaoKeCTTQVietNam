@@ -6,6 +6,7 @@ import { NativeSelect } from "@mantine/core";
 import jsonData from "../../output/VCBANK110.json";
 import jsonDataVTB from "../../output/VTBANK1012.json";
 import jsonDataVCB1012 from "../../output/VCB1012.json";
+import jsonDataBIDV112 from "../../output/BIDV112.json";
 const Main = () => {
   const [value, setValue] = useState("VietComBank 1-10");
   const [rowData, setRowData] = useState([]);
@@ -94,6 +95,22 @@ const Main = () => {
 
       setRowData(filteredData);
     }
+    else if (value === "BIDV 1-12") {
+      const filteredData = jsonDataBIDV112
+        .map((item) => {
+          // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
+            
+            return {
+              ID: item[0],
+              NgàyGiaoDịch: item[1],
+              SốTiềnChuyển: item[2],
+              NộiDungChiTiết: item[3],
+            };
+        })
+        .filter((item) => item !== null);
+
+      setRowData(filteredData);
+    }
   }, [value]);
 
   const pagination = true;
@@ -121,7 +138,7 @@ const Main = () => {
           "VietComBank 1-10",
           "VietComBank 10-12",
           "VietTinBank 10-12",
-          "Coming Soon",
+          "BIDV 1-12",
         ]}
       />
       <AgGridReact
