@@ -5,6 +5,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { NativeSelect } from "@mantine/core";
 import jsonData from "../../output/VCBANK110.json";
 import jsonDataVTB from "../../output/VTBANK1012.json";
+import jsonDataVCB1012 from "../../output/VCB1012.json";
 const Main = () => {
   const [value, setValue] = useState("VietComBank 1-10");
   const [rowData, setRowData] = useState([]);
@@ -77,8 +78,23 @@ const Main = () => {
         .filter((item) => item !== null);
 
       setRowData(filteredData);
+    } else if (value === "VietComBank 10-12") {
+      const filteredData = jsonDataVCB1012
+        .map((item) => {
+          // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
+            
+            return {
+              ID: item[0],
+              NgàyGiaoDịch: item[1],
+              SốTiềnChuyển: item[3],
+              NộiDungChiTiết: item[2],
+            };
+        })
+        .filter((item) => item !== null);
+
+      setRowData(filteredData);
     }
-  }, [value]); 
+  }, [value]);
 
   const pagination = true;
   const paginationPageSize = 5;
@@ -101,7 +117,12 @@ const Main = () => {
         label="Chọn Ngân Hàng"
         value={value}
         onChange={(event) => setValue(event.currentTarget.value)}
-        data={["VietComBank 1-10", "VietTinBank 10-12", "Coming Soon", "Coming Soon"]}
+        data={[
+          "VietComBank 1-10",
+          "VietComBank 10-12",
+          "VietTinBank 10-12",
+          "Coming Soon",
+        ]}
       />
       <AgGridReact
         rowData={rowData}

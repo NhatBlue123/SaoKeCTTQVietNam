@@ -2,7 +2,7 @@ import fs from "fs";
 import { PdfDataParser } from "pdf-data-parser";
 
 async function main() {
-  const pdfPath = "../../data/CTTU_VTBANK_10-12.pdf";
+  const pdfPath = "../../data/MTTQ_10-12.pdf";
 
   let parser = new PdfDataParser({
     url: pdfPath,
@@ -25,7 +25,7 @@ async function main() {
 
   ];
   const data = [];
-  for (let i = 13; i < rows.length; i++) {
+  for (let i = 4; i < rows.length; i++) {
     let rowString = JSON.stringify(rows[i]);
     if (!Array.isArray(rows[i]) || !rows[i]) {
       continue;
@@ -55,7 +55,7 @@ async function main() {
     dataLuu.push(data[i]);
   }
   
-  saveTransitison(dataLuu, "../../output/VTBANK1012.json");
+  saveTransitison(dataLuu, "../../output/VCB1012.json");
 }
 main();
 
