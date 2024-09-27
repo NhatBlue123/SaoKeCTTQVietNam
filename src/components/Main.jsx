@@ -2,17 +2,44 @@ import React, { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 import "ag-grid-community/styles/ag-theme-quartz.css";
-import { NativeSelect } from "@mantine/core";
 import jsonData from "../../output/VCBANK110.json";
 import jsonDataVTB from "../../output/VTBANK1012.json";
 import jsonDataVCB1012 from "../../output/VCB1012.json";
 import jsonDataBIDV112 from "../../output/BIDV112.json";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  CartesianGrid,
+} from "recharts";
+import "@mantine/charts/styles.css";
 const Main = () => {
+  const data = [
+    { name: "1/9", VND: 149000 },
+    { name: "2/9", VND: 572000 },
+    { name: "3/9", VND: 1111000 },
+    { name: "4/9", VND: 1687000 },
+    { name: "5/9", VND: 202888 },
+    { name: "6/9", VND: 707000 },
+    { name: "7/9", VND: 1865752 },
+    { name: "8/9", VND: 65920200 },
+    { name: "9/9", VND: 1085663566 },
+    { name: "10/9", VND: 35418614300 },
+  ];
+  const data1012 = [
+    { name: "10/9", VND: 360955656 },
+    { name: "11/9", VND: 4453242994 },
+    { name: "12/9", VND: 969500581 },
+  ];
   const [value, setValue] = useState("VietComBank 1-10");
   const [rowData, setRowData] = useState([]);
-
+  const [totalByDates, setTotalByDate] = useState(data);
   useEffect(() => {
     if (value === "VietComBank 1-10") {
+      setTotalByDate(data);
       const filteredData = jsonData
         .map((item) => {
           const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
@@ -80,32 +107,32 @@ const Main = () => {
 
       setRowData(filteredData);
     } else if (value === "VietComBank 10-12") {
+      setTotalByDate(data1012);
       const filteredData = jsonDataVCB1012
         .map((item) => {
           // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
-            
-            return {
-              ID: item[0],
-              NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[3],
-              NộiDungChiTiết: item[2],
-            };
+
+          return {
+            ID: item[0],
+            NgàyGiaoDịch: item[1],
+            SốTiềnChuyển: item[3],
+            NộiDungChiTiết: item[2],
+          };
         })
         .filter((item) => item !== null);
 
       setRowData(filteredData);
-    }
-    else if (value === "BIDV 1-12") {
+    } else if (value === "BIDV 1-12") {
       const filteredData = jsonDataBIDV112
         .map((item) => {
           // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
-            
-            return {
-              ID: item[0],
-              NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[2],
-              NộiDungChiTiết: item[3],
-            };
+
+          return {
+            ID: item[0],
+            NgàyGiaoDịch: item[1],
+            SốTiềnChuyển: item[2],
+            NộiDungChiTiết: item[3],
+          };
         })
         .filter((item) => item !== null);
 
@@ -114,8 +141,8 @@ const Main = () => {
   }, [value]);
 
   const pagination = true;
-  const paginationPageSize = 5;
-  const paginationPageSizeSelector = [10, 20, 30];
+  const paginationPageSize = 30;
+  const paginationPageSizeSelector = [30, 40, 50];
 
   // Column Definitions: Defines the columns to be displayed.
   const [colDefs] = useState([
@@ -126,29 +153,67 @@ const Main = () => {
   ]);
 
   return (
-    <div
-      className="ag-theme-quartz" // applying the Data Grid theme
-      style={{ height: 500 }} // the Data Grid will fill the size of the parent container
-    >
-      <NativeSelect
-        label="Chọn Ngân Hàng"
-        value={value}
-        onChange={(event) => setValue(event.currentTarget.value)}
-        data={[
-          "VietComBank 1-10",
-          "VietComBank 10-12",
-          "VietTinBank 10-12",
-          "BIDV 1-12",
-        ]}
-      />
-      <AgGridReact
-        rowData={rowData}
-        columnDefs={colDefs}
-        pagination={pagination}
-        paginationPageSize={paginationPageSize}
-        paginationPageSizeSelector={paginationPageSizeSelector}
-      />
-    </div>
+    <>
+      {/* <div>
+        <NativeSelect
+          label="Chọn Ngân Hàng"
+          value={value}
+          onChange={(event) => setValue(event.currentTarget.value)}
+          data={[
+            "VietComBank 1-10",
+            "VietComBank 10-12",
+            "VietTinBank 10-12",
+            "BIDV 1-12",
+          ]}
+        />
+      </div> */}
+      <div className="mb-3">
+        <label className="text-lg" for="banks">
+          Chọn Ngân Hàng 🏦
+        </label>
+        <select
+          name="banks"
+          onChange={(event) => setValue(event.currentTarget.value)}
+        >
+          <option>VietComBank 1-10</option>
+          <option>VietComBank 10-12</option>
+          <option>VietTinBank 10-12</option>
+          <option>BIDV 1-12</option>
+        </select>
+      </div>
+      <div className="ml-20">
+        <BarChart width={1300} height={300} data={totalByDates}>
+          <XAxis dataKey="name" stroke="#8884d8" />
+          <YAxis />
+          <Tooltip wrapperStyle={{ width: 100, backgroundColor: "#ccc" }} />
+          <Legend
+            width={100}
+            wrapperStyle={{
+              top: 40,
+              right: 20,
+              backgroundColor: "#f5f5f5",
+              border: "1px solid #d5d5d5",
+              borderRadius: 3,
+              lineHeight: "40px",
+            }}
+          />
+          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+          <Bar dataKey="VND" fill="#8884d8" barSize={50} />
+        </BarChart>
+      </div>
+      <div
+        className="ag-theme-quartz" // applying the Data Grid theme
+        style={{ height: 500 }} // the Data Grid will fill the size of the parent container
+      >
+        <AgGridReact
+          rowData={rowData}
+          columnDefs={colDefs}
+          pagination={pagination}
+          paginationPageSize={paginationPageSize}
+          paginationPageSizeSelector={paginationPageSizeSelector}
+        />
+      </div>
+    </>
   );
 };
 
