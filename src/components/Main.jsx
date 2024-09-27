@@ -34,6 +34,11 @@ const Main = () => {
     { name: "11/9", VND: 4453242994 },
     { name: "12/9", VND: 969500581 },
   ];
+  const dataVTB1012 = [
+    { name: "10/9", VND: 653117814 },
+    { name: "11/9", VND: 13620845912 },
+    { name: "12/9", VND: 20839341284 },
+  ]
   const [value, setValue] = useState("VietComBank 1-10");
   const [rowData, setRowData] = useState([]);
   const [totalByDates, setTotalByDate] = useState(data);
@@ -57,6 +62,7 @@ const Main = () => {
 
       setRowData(filteredData);
     } else if (value === "VietTinBank 10-12") {
+      setTotalByDate(dataVTB1012);
       const filteredData = jsonDataVTB
         .map((item) => {
           const match = item[0].match(
