@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fdocs/pdf": "^1.0.0",
     "@mantine/charts": "^7.12.2",
     "@mantine/code-highlight": "^7.12.2",
     "@mantine/core": "^7.12.2",
