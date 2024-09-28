@@ -38,13 +38,31 @@ const Main = () => {
     { name: "10/9", VND: 653117814 },
     { name: "11/9", VND: 13620845912 },
     { name: "12/9", VND: 20839341284 },
-  ]
+  ];
+  const dataBIDV112 = [
+    { name: "1/9", VND: 150000 },
+    { name: "2/9", VND: 1500 },
+    { name: "3/9", VND: 46139 },
+    { name: "4/9", VND: 50797 },
+    { name: "5/9", VND: 202888 },
+    { name: "6/9", VND: 707000 },
+    { name: "7/9", VND: 1865752 },
+    { name: "8/9", VND: 65920200 },
+    { name: "9/9", VND: 1081248875 },
+    { name: "10/9", VND: 5421176972 },
+    { name: "11/9", VND: 2971505966 },
+    { name: "12/9", VND: 1388815352 },
+  ];
   const [value, setValue] = useState("VietComBank 1-10");
   const [rowData, setRowData] = useState([]);
   const [totalByDates, setTotalByDate] = useState(data);
+  const [highestMoney, setHighestMoney] = useState("10.460.780.225 VNĐ");
+  const [lowestMoney, setLowestMoney] = useState("0 VND");
   useEffect(() => {
     if (value === "VietComBank 1-10") {
       setTotalByDate(data);
+      setHighestMoney("10.460.780.225 VNĐ");
+      setLowestMoney("0 VNĐ");
       const filteredData = jsonData
         .map((item) => {
           const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
@@ -63,6 +81,8 @@ const Main = () => {
       setRowData(filteredData);
     } else if (value === "VietTinBank 10-12") {
       setTotalByDate(dataVTB1012);
+      setHighestMoney("5.000.000.000 VNĐ");
+      setLowestMoney("0 VNĐ");
       const filteredData = jsonDataVTB
         .map((item) => {
           const match = item[0].match(
@@ -114,6 +134,8 @@ const Main = () => {
       setRowData(filteredData);
     } else if (value === "VietComBank 10-12") {
       setTotalByDate(data1012);
+      setHighestMoney("10.460.780.225 VNĐ");
+      setLowestMoney("0 VNĐ");
       const filteredData = jsonDataVCB1012
         .map((item) => {
           // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
@@ -129,6 +151,9 @@ const Main = () => {
 
       setRowData(filteredData);
     } else if (value === "BIDV 1-12") {
+      setTotalByDate(dataBIDV112);
+      setHighestMoney("2.000.000.000 VNĐ");
+      setLowestMoney("1 VNĐ");
       const filteredData = jsonDataBIDV112
         .map((item) => {
           // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
@@ -187,11 +212,12 @@ const Main = () => {
           <option>BIDV 1-12</option>
         </select>
       </div>
-      <div className="ml-20">
+      <div className="ml-20 flex">
+        <div>
         <BarChart width={1300} height={300} data={totalByDates}>
           <XAxis dataKey="name" stroke="#8884d8" />
           <YAxis />
-          <Tooltip wrapperStyle={{ width: 100, backgroundColor: "#ccc" }} />
+          <Tooltip wrapperStyle={{ width: 200, backgroundColor: "#ccc" }} />
           <Legend
             width={100}
             wrapperStyle={{
@@ -206,6 +232,11 @@ const Main = () => {
           <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
           <Bar dataKey="VND" fill="#8884d8" barSize={50} />
         </BarChart>
+        </div>
+        <div>
+          <p>Cao Nhất: {highestMoney}</p>
+          <p>Thấp Nhất {lowestMoney}</p>
+        </div>
       </div>
       <div
         className="ag-theme-quartz" // applying the Data Grid theme
