@@ -198,23 +198,35 @@ const Main = () => {
           ]}
         />
       </div> */}
-      <div className="mb-3">
-        <label className="text-lg" for="banks">
-          Chọn Ngân Hàng 🏦
-        </label>
-        <select
-          name="banks"
-          onChange={(event) => setValue(event.currentTarget.value)}
-        >
-          <option>VietComBank 1-10</option>
-          <option>VietComBank 10-12</option>
-          <option>VietTinBank 10-12</option>
-          <option>BIDV 1-12</option>
-        </select>
-      </div>
-      <div className="ml-20 flex">
+      <div className="mb-3 flex justify-between">
         <div>
-        <BarChart width={1300} height={300} data={totalByDates}>
+          <label className="text-lg" for="banks">
+            Chọn Ngân Hàng 🏦
+          </label>
+          <select
+            name="banks"
+            onChange={(event) => setValue(event.currentTarget.value)}
+          >
+            <option>VietComBank 1-10</option>
+            <option>VietComBank 10-12</option>
+            <option>VietTinBank 10-12</option>
+            <option>BIDV 1-12</option>
+          </select>
+        </div>
+        <div>
+          <p>Cao Nhất: {highestMoney}</p>
+          <p>Thấp Nhất {lowestMoney}</p>
+        </div>
+      </div>
+      <div className="p-15 flex justify-center">
+        <BarChart
+          style={{
+            flex: "1",
+          }}
+          width={1300}
+          height={300}
+          data={totalByDates}
+        >
           <XAxis dataKey="name" stroke="#8884d8" />
           <YAxis />
           <Tooltip wrapperStyle={{ width: 200, backgroundColor: "#ccc" }} />
@@ -232,11 +244,6 @@ const Main = () => {
           <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
           <Bar dataKey="VND" fill="#8884d8" barSize={50} />
         </BarChart>
-        </div>
-        <div>
-          <p>Cao Nhất: {highestMoney}</p>
-          <p>Thấp Nhất {lowestMoney}</p>
-        </div>
       </div>
       <div
         className="ag-theme-quartz" // applying the Data Grid theme
