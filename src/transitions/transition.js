@@ -26,7 +26,7 @@ async function main() {
 
   ];
   const data = [];
-  for (let i = 12; i < rows.length; i++) {
+  for (let i = 14; i < rows.length ; i++) {
     let rowString = JSON.stringify(rows[i]);
     if (!Array.isArray(rows[i]) || !rows[i]) {
       continue;
@@ -53,6 +53,13 @@ async function main() {
     //   data[i - 1][2] = data[i - 1][2] + " " + data[i][0];
     //   continue;
     // }
+    if(data[i].length === 2)
+    {
+      let dataS = data[i+1];
+      data[i].push(dataS[0]);
+      data[i].push(dataS[1])
+      console.log(data[i]);
+    }
     dataLuu.push(data[i]);
   }
   

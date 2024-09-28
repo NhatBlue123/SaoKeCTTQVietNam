@@ -4,7 +4,7 @@ import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the 
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import jsonData from "../../output/VCBANK110.json";
 import jsonDataVTB from "../../output/VTBANK1012.json";
-import jsonDataVCB1012 from "../../output/VCB1012.json";
+import jsonDataVCB1012 from "../../output/VCB1012New.json";
 import jsonDataBIDV112 from "../../output/BIDV112.json";
 import {
   BarChart,
