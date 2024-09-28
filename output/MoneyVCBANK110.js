@@ -1,14 +1,14 @@
-import dataVC from "./VCB1012.json" assert { type: "json" };
+import dataVC from "./test.json" assert { type: "json" };
 
 const totalsByDate = {};
 
 dataVC.map((item) => {
-  const date = item[1]; // Lấy ngày
+  const date = item[1].split(" ")[0]; // Lấy ngày, bỏ phần giờ
 
-  // Kiểm tra nếu phần tử thứ 3 (số tiền) tồn tại trước khi gọi replace
-  if (item[3]) {
-    // Lấy số tiền và chuyển thành số thực (loại bỏ dấu phẩy)
-    const amount = parseFloat(item[3].replace(/,/g, ''));
+  // Kiểm tra nếu item[2] tồn tại và hợp lệ trước khi thao tác
+
+  if (item[2]) {
+    const amount = parseFloat(item[2].replace(/\./g, "").replace(",", ".")); // Lấy số tiền và chuyển thành số thực
 
     // Nếu ngày đã tồn tại trong đối tượng, cộng số tiền vào, nếu chưa thì khởi tạo
     if (totalsByDate[date]) {
@@ -17,7 +17,6 @@ dataVC.map((item) => {
       totalsByDate[date] = amount;
     }
   } else {
-    console.error(`Số tiền không tồn tại cho ngày ${date}`);
   }
 });
 
