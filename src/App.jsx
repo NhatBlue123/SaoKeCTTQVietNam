@@ -1,6 +1,6 @@
 import { MantineProvider } from '@mantine/core';
 
-import Home from './components/home';
+import Home from './components/home.jsx';
 export default function App() {
   return (
     <>
