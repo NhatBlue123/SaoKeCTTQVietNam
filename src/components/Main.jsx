@@ -6,6 +6,7 @@ import jsonData from "../../output/VCBANK110.json";
 import jsonDataVTB from "../../output/VTBANK1012.json";
 import jsonDataVCB1012 from "../../output/VCB1012New.json";
 import jsonDataBIDV112 from "../../output/BIDV112.json";
+import jsonDataVCB119 from "../../output/VCB119.json";
 import {
   BarChart,
   Bar,
@@ -53,13 +54,13 @@ const Main = () => {
     { name: "11/9", VND: 2971505966 },
     { name: "12/9", VND: 1388815352 },
   ];
-  const [value, setValue] = useState("VietComBank 1-10");
+  const [value, setValue] = useState("VietComBank 1-10/9");
   const [rowData, setRowData] = useState([]);
   const [totalByDates, setTotalByDate] = useState(data);
   const [highestMoney, setHighestMoney] = useState("10.460.780.225 VNĐ");
   const [lowestMoney, setLowestMoney] = useState("0 VND");
   useEffect(() => {
-    if (value === "VietComBank 1-10") {
+    if (value === "VietComBank 1-10/9") {
       setTotalByDate(data);
       setHighestMoney("10.460.780.225 VNĐ");
       setLowestMoney("0 VNĐ");
@@ -79,7 +80,25 @@ const Main = () => {
         .filter((item) => item !== null);
 
       setRowData(filteredData);
-    } else if (value === "VietTinBank 10-12") {
+    } else if (value === "VietComBank 11-9") {
+      setTotalByDate(data1012);
+      setHighestMoney("10.460.780.225 VNĐ");
+      setLowestMoney("0 VNĐ");
+      const filteredData = jsonDataVCB119
+        .map((item) => {
+          // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
+
+          return {
+            ID: item[0],
+            NgàyGiaoDịch: item[1],
+            SốTiềnChuyển: item[2],
+            NộiDungChiTiết: item[3],
+          };
+        })
+        .filter((item) => item !== null);
+
+      setRowData(filteredData);
+    } else if (value === "VietTinBank 10-12/9") {
       setTotalByDate(dataVTB1012);
       setHighestMoney("5.000.000.000 VNĐ");
       setLowestMoney("0 VNĐ");
@@ -132,7 +151,7 @@ const Main = () => {
         .filter((item) => item !== null);
 
       setRowData(filteredData);
-    } else if (value === "VietComBank 10-12") {
+    } else if (value === "VietComBank 10-12/9") {
       setTotalByDate(data1012);
       setHighestMoney("10.460.780.225 VNĐ");
       setLowestMoney("0 VNĐ");
@@ -150,7 +169,7 @@ const Main = () => {
         .filter((item) => item !== null);
 
       setRowData(filteredData);
-    } else if (value === "BIDV 1-12") {
+    } else if (value === "BIDV 1-12/9") {
       setTotalByDate(dataBIDV112);
       setHighestMoney("2.000.000.000 VNĐ");
       setLowestMoney("1 VNĐ");
@@ -207,10 +226,11 @@ const Main = () => {
             name="banks"
             onChange={(event) => setValue(event.currentTarget.value)}
           >
-            <option>VietComBank 1-10</option>
-            <option>VietComBank 10-12</option>
-            <option>VietTinBank 10-12</option>
-            <option>BIDV 1-12</option>
+            <option>VietComBank 1-10/9</option>
+            <option>VietComBank 10-12/9</option>
+            <option>VietComBank 11-9</option>
+            <option>VietTinBank 10-12/9</option>
+            <option>BIDV 1-12/9</option>
           </select>
         </div>
         <div>

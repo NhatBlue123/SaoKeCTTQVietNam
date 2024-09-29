@@ -2,7 +2,7 @@ import fs from "fs";
 import { PdfDataParser } from "pdf-data-parser";
 
 async function main() {
-  const pdfPath = "../../data/CT1-12BIDV.pdf";
+  const pdfPath = "../../data/VCB11.09.2024.pdf";
 
   let parser = new PdfDataParser({
     url: pdfPath,
@@ -22,11 +22,10 @@ async function main() {
     "Ngày GD",
     "Số CT/ Doc No",
     "TNX Date",
-    "Chứng từ này được"
-
+    "Chứng từ này được",
   ];
   const data = [];
-  for (let i = 14; i < rows.length ; i++) {
+  for (let i = 4; i < rows.length; i++) {
     let rowString = JSON.stringify(rows[i]);
     if (!Array.isArray(rows[i]) || !rows[i]) {
       continue;
@@ -36,7 +35,7 @@ async function main() {
     }
 
     if (!printedRows.has(rowString)) {
-     data.push(rows[i]);
+      data.push(rows[i]);
       // console.log(rows[i]);
       printedRows.add(rowString); // Thêm vào Set để đánh dấu đã in
     }
@@ -53,17 +52,26 @@ async function main() {
     //   data[i - 1][2] = data[i - 1][2] + " " + data[i][0];
     //   continue;
     // }
-    if(data[i].length === 2)
-    {
-      let dataS = data[i+1];
+    if (data[i][3] === undefined) {
+      // Tách chuỗi ở phần tử thứ 3 (data[i][2]) thành 2 phần
+      const parts = data[i][2].split('"'); // Tách chuỗi bằng dấu "
+      const amount = parts[0]; // Phần đầu là số tiền
+      const details = parts[1]; // Phần sau là thông tin chi tiết
+  
+      // Cập nhật lại mảng với số tiền và thông tin chi tiết
+      data[i] = [data[i][0], data[i][1], amount, details];
+    }
+  
+    if (data[i].length === 2) {
+      let dataS = data[i + 1];
       data[i].push(dataS[0]);
-      data[i].push(dataS[1])
+      data[i].push(dataS[1]);
       console.log(data[i]);
     }
     dataLuu.push(data[i]);
   }
-  
-  saveTransitison(dataLuu, "../../output/BIDV112.json");
+
+  saveTransitison(dataLuu, "../../output/VCB119.json");
 }
 main();
 

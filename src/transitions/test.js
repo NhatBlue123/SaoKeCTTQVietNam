@@ -1,5 +1,8 @@
- import fs from 'fs';
-
+import fs from 'fs';
+import data from '../../output/test.json' assert { type: "json" };
+// data.map(item =>{
+//   console.log(item[3]);
+// });
 // // Đọc file JSON
 // fs.readFile('../../output/VTBANK1012.json', 'utf8', (err, data) => {
 //     if (err) {
@@ -51,19 +54,19 @@
 const totalsByDate = {};
 
 // Duyệt qua các phần tử của mảng
-data.forEach(item => {
-  const date = item[1].split(' ')[0]; // Lấy ngày, bỏ phần giờ
-  const amount = parseFloat(item[2].replace(/\./g, '').replace(',', '.')); // Lấy số tiền và chuyển thành số thực
+// data.forEach(item => {
+//   const date = item[1].split(' ')[0]; // Lấy ngày, bỏ phần giờ
+//   const amount = parseFloat(item[2].replace(/\./g, '').replace(',', '.')); // Lấy số tiền và chuyển thành số thực
 
-  // Nếu ngày đã tồn tại trong đối tượng, cộng số tiền vào, nếu chưa thì khởi tạo
-  if (totalsByDate[date]) {
-    totalsByDate[date] += amount;
-  } else {
-    totalsByDate[date] = amount;
-  }
-});
+//   // Nếu ngày đã tồn tại trong đối tượng, cộng số tiền vào, nếu chưa thì khởi tạo
+//   if (totalsByDate[date]) {
+//     totalsByDate[date] += amount;
+//   } else {
+//     totalsByDate[date] = amount;
+//   }
+// });
 
-// In ra kết quả
-for (const date in totalsByDate) {
-  console.log(`Ngày ${date}: ${totalsByDate[date].toLocaleString()} VND`);
-}
+// // In ra kết quả
+// for (const date in totalsByDate) {
+//   console.log(`Ngày ${date}: ${totalsByDate[date].toLocaleString()} VND`);
+// }
