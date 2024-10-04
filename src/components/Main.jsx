@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,Suspense } from "react";
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 import "ag-grid-community/styles/ag-theme-quartz.css";
@@ -166,6 +166,46 @@ const Main = () => {
 
         setRowData(filteredData);
       }
+      else if (value === "VietComBank 12-9") {
+        setTotalByDate(dataVCB119);
+        setHighestMoney("10.460.780.225 VNĐ");
+        setLowestMoney("0 VNĐ");
+        const data = await import("../../output/VCB129.json");
+        const filteredData = data.default
+          .map((item) => {
+            // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
+
+            return {
+              ID: item[0],
+              NgàyGiaoDịch: item[1],
+              SốTiềnChuyển: item[2],
+              NộiDungChiTiết: item[3],
+            };
+          })
+          .filter((item) => item !== null);
+
+        setRowData(filteredData);
+      }
+      else if (value === "VietComBank 13-9") {
+        setTotalByDate(dataVCB119);
+        setHighestMoney("10.460.780.225 VNĐ");
+        setLowestMoney("0 VNĐ");
+        const data = await import("../../output/VCB139.json");
+        const filteredData = data.default
+          .map((item) => {
+            // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
+
+            return {
+              ID: item[0],
+              NgàyGiaoDịch: item[1],
+              SốTiềnChuyển: item[2],
+              NộiDungChiTiết: item[3],
+            };
+          })
+          .filter((item) => item !== null);
+
+        setRowData(filteredData);
+      }
     };
 
     fetchData();
@@ -210,6 +250,8 @@ const Main = () => {
             <option>VietComBank 1-10/9</option>
             <option>VietComBank 10-12/9</option>
             <option>VietComBank 11-9</option>
+            <option>VietComBank 12-9</option>
+            <option>VietComBank 13-9</option>
             <option>VietTinBank 10-12/9</option>
             <option>BIDV 1-12/9</option>
           </select>
