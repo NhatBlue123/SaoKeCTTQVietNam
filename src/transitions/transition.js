@@ -2,7 +2,7 @@ import fs from "fs";
 import { PdfDataParser } from "pdf-data-parser";
 
 async function main() {
-  const pdfPath = "../../data/VCB11.09.2024.pdf";
+  const pdfPath = "../../data/VCB13.09.2024.pdf";
 
   let parser = new PdfDataParser({
     url: pdfPath,
@@ -52,26 +52,41 @@ async function main() {
     //   data[i - 1][2] = data[i - 1][2] + " " + data[i][0];
     //   continue;
     // }
-    if (data[i][3] === undefined) {
+    // if (data[i][3] === undefined) {
+    //   // Tách chuỗi ở phần tử thứ 3 (data[i][2]) thành 2 phần
+    //   const parts = data[i][2].split('"'); // Tách chuỗi bằng dấu "
+    //   const amount = parts[0]; // Phần đầu là số tiền
+    //   const details = parts[1]; // Phần sau là thông tin chi tiết
+  
+    //   // Cập nhật lại mảng với số tiền và thông tin chi tiết
+    //   data[i] = [data[i][0], data[i][1], amount, details];
+    // }
+    if (data[i][2] && data[i][3] === undefined) {
       // Tách chuỗi ở phần tử thứ 3 (data[i][2]) thành 2 phần
       const parts = data[i][2].split('"'); // Tách chuỗi bằng dấu "
-      const amount = parts[0]; // Phần đầu là số tiền
-      const details = parts[1]; // Phần sau là thông tin chi tiết
-  
-      // Cập nhật lại mảng với số tiền và thông tin chi tiết
-      data[i] = [data[i][0], data[i][1], amount, details];
+      
+      // Chỉ tách nếu có đủ 2 phần sau khi split
+      if (parts.length >= 2) {
+        const amount = parts[0]; // Phần đầu là số tiền
+        const details = parts[1]; // Phần sau là thông tin chi tiết
+        
+        // Cập nhật lại mảng với số tiền và thông tin chi tiết
+        data[i] = [data[i][0], data[i][1], amount, details];
+      } else {
+        console.log(`Lỗi: Chuỗi không có định dạng hợp lệ tại dòng ${i + 1}`);
+      }
     }
   
-    if (data[i].length === 2) {
-      let dataS = data[i + 1];
-      data[i].push(dataS[0]);
-      data[i].push(dataS[1]);
-      console.log(data[i]);
-    }
+    // if (data[i].length === 2) {
+    //   let dataS = data[i + 1];
+    //   data[i].push(dataS[0]);
+    //   data[i].push(dataS[1]);
+    //   console.log(data[i]);
+    // }
     dataLuu.push(data[i]);
   }
 
-  saveTransitison(dataLuu, "../../output/VCB119.json");
+  saveTransitison(dataLuu, "../../output/VCB139.json");
 }
 main();
 
