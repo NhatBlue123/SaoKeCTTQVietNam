@@ -232,9 +232,22 @@ const Main = () => {
         const filteredData = data.default
           .map((item,index) => {
             // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
+            let day = "";
+            if(index+1 < 34583)
+            {
+              day = "13/09/2024";
+            }
+            if(index+1 >= 34583 && index < 81569)
+            {
+              day = "14/09/2024";
+            }
+            else if(index+1 >= 81569)
+            {
+              day = "15/09/2024";
+            }
             return {
               ID: index+1,
-              NgàyGiaoDịch: "13/09/2024",
+              NgàyGiaoDịch: day,
               SốTiềnChuyển: item[2],
               NộiDungChiTiết: item[1] + " " + item[3],
             };
