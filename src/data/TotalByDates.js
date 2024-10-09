@@ -35,4 +35,6 @@ export const dataBIDV112 = [
   { name: "12/9", VND: 1388815352 },
 ];
 export const dataVCB119 = [{ name: "11/9", VND: 13620845912 }];
+export const dataVTB179 = [{ name: "17/9", VND: 13620845912 }];
+
 // export default {data,data1012,dataBIDV112,dataVTB1012}
