@@ -1,4 +1,4 @@
-import React, { useEffect, useState,Suspense } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 import "ag-grid-community/styles/ag-theme-quartz.css";
@@ -13,6 +13,7 @@ import {
   dataBIDV112,
   dataVTB1012,
   dataVCB119,
+  dataVTB179,
 } from "../data/TotalByDates";
 import {
   BarChart,
@@ -53,8 +54,7 @@ const Main = () => {
           .filter((item) => item !== null);
 
         setRowData(filteredData);
-      }
-      else if (value === "VietComBank 11-9") {
+      } else if (value === "VietComBank 11-9") {
         setTotalByDate(dataVCB119);
         setHighestMoney("10.460.780.225 VNĐ");
         setLowestMoney("0 VNĐ");
@@ -166,7 +166,7 @@ const Main = () => {
 
         setRowData(filteredData);
       }
-      else if (value === "VietComBank 12-9") {
+       else if (value === "VietComBank 12-9") {
         setTotalByDate(dataVCB119);
         setHighestMoney("10.460.780.225 VNĐ");
         setLowestMoney("0 VNĐ");
@@ -185,8 +185,7 @@ const Main = () => {
           .filter((item) => item !== null);
 
         setRowData(filteredData);
-      }
-      else if (value === "VietComBank 13-9") {
+      } else if (value === "VietComBank 13-9") {
         setTotalByDate(dataVCB119);
         setHighestMoney("10.460.780.225 VNĐ");
         setLowestMoney("0 VNĐ");
@@ -205,6 +204,83 @@ const Main = () => {
           .filter((item) => item !== null);
 
         setRowData(filteredData);
+      } else if (value === "VietComBank 14-9") {
+        setTotalByDate(dataVCB119);
+        setHighestMoney("10.460.780.225 VNĐ");
+        setLowestMoney("0 VNĐ");
+        const data = await import("../../output/VCB149.json");
+        const filteredData = data.default
+          .map((item) => {
+            // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
+
+            return {
+              ID: item[0],
+              NgàyGiaoDịch: item[1],
+              SốTiềnChuyển: item[2],
+              NộiDungChiTiết: item[3],
+            };
+          })
+          .filter((item) => item !== null);
+
+        setRowData(filteredData);
+      }else if (value === "VietTinBank 13-15/9") {
+        setTotalByDate(dataBIDV112);
+        setHighestMoney("2.000.000.000 VNĐ");
+        setLowestMoney("1 VNĐ");
+        const data = await import("../../output/VTBANK1315.json");
+
+        const filteredData = data.default
+          .map((item,index) => {
+            // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
+            return {
+              ID: index+1,
+              NgàyGiaoDịch: "13/09/2024",
+              SốTiềnChuyển: item[2],
+              NộiDungChiTiết: item[1] + " " + item[3],
+            };
+          })
+          .filter((item) => item !== null);
+
+        setRowData(filteredData);
+      } 
+      else if (value === "VietTinBank 16-9") {
+        setTotalByDate(dataVTB179);
+        setHighestMoney("10.460.780.225 VNĐ");
+        setLowestMoney("0 VNĐ");
+        const data = await import("../../output/VTBANK169.json");
+        const filteredData = data.default
+          .map((item) => {
+            // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
+            // const money = item[3].match(/^(-?\d+(?:\.\d+)?)(.*)$/);
+            return {
+              ID: item[0],
+              NgàyGiaoDịch: item[1],
+              SốTiềnChuyển: item[3],
+              NộiDungChiTiết: item[2] + " " + item[4],
+            };
+          })
+          .filter((item) => item !== null);
+
+        setRowData(filteredData);
+      } else if (value === "VietTinBank 17-9") {
+        setTotalByDate(dataVTB179);
+        setHighestMoney("10.460.780.225 VNĐ");
+        setLowestMoney("0 VNĐ");
+        const data = await import("../../output/VTBANK179.json");
+        const filteredData = data.default
+          .map((item) => {
+            // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
+            const money = item[3].match(/^(-?\d+(?:\.\d+)?)(.*)$/);
+            return {
+              ID: item[0],
+              NgàyGiaoDịch: item[1],
+              SốTiềnChuyển: money[1],
+              NộiDungChiTiết: item[2],
+            };
+          })
+          .filter((item) => item !== null);
+
+        setRowData(filteredData);
       }
     };
 
@@ -213,7 +289,7 @@ const Main = () => {
 
   const pagination = true;
   const paginationPageSize = 30;
-  const paginationPageSizeSelector = [30, 40, 50];
+  const paginationPageSizeSelector = [100, 200, 500];
 
   // Column Definitions: Defines the columns to be displayed.
   const [colDefs] = useState([
@@ -247,13 +323,20 @@ const Main = () => {
             name="banks"
             onChange={(event) => setValue(event.currentTarget.value)}
           >
+            <option>AgriBank 9-13/9</option>
             <option>VietComBank 1-10/9</option>
             <option>VietComBank 10-12/9</option>
             <option>VietComBank 11-9</option>
             <option>VietComBank 12-9</option>
             <option>VietComBank 13-9</option>
+            <option>VietComBank 14-9</option>
             <option>VietTinBank 10-12/9</option>
+            <option>VietTinBank 13-15/9</option>
+            <option>VietTinBank 16-9</option>
+            <option>VietTinBank 17-9</option>
             <option>BIDV 1-12/9</option>
+            <option>BIDV 10-17/9</option>
+            <option>BIDV 18-19/9</option>
           </select>
         </div>
         <div>
