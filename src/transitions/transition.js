@@ -2,7 +2,7 @@ import fs from "fs";
 import { PdfDataParser } from "pdf-data-parser";
 
 async function main() {
-  const pdfPath = "../../data/VTB13-15.pdf";
+  const pdfPath = "../../data/MTTQ_BIDV_18-19.pdf";
 
   let parser = new PdfDataParser({
     url: pdfPath,
@@ -98,7 +98,7 @@ async function main() {
     dataLuu.push(data[i]);
   }
 
-  saveTransitison(dataLuu, "../../output/VTBANK1315.json");
+  saveTransitison(dataLuu, "../../output/BIDV1819.json");
 }
 main();
 

@@ -45,7 +45,7 @@ const Main = () => {
               return {
                 ID: match[2],
                 NgàyGiaoDịch: match[1],
-                SốTiềnChuyển: item[1],
+                SốTiềnChuyển: item[1]+ " " + "đ",
                 NộiDungChiTiết: item[2],
               };
             }
@@ -66,7 +66,7 @@ const Main = () => {
             return {
               ID: item[0],
               NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[2],
+              SốTiềnChuyển: item[2]+ " " + "đ",
               NộiDungChiTiết: item[3],
             };
           })
@@ -119,7 +119,7 @@ const Main = () => {
               return {
                 ID: ID,
                 NgàyGiaoDịch: `${day}/${match[2]}/${match[3]} ${match[4]}`,
-                SốTiềnChuyển: item[2],
+                SốTiềnChuyển: item[2]+ " " + "đ",
                 NộiDungChiTiết: item[1] + " " + item[3],
               };
             }
@@ -138,7 +138,7 @@ const Main = () => {
             return {
               ID: item[0],
               NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[3],
+              SốTiềnChuyển: item[3]+ " " + "đ",
               NộiDungChiTiết: item[2],
             };
           })
@@ -158,7 +158,7 @@ const Main = () => {
             return {
               ID: item[0],
               NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[2],
+              SốTiềnChuyển: item[2]+ " " + "đ",
               NộiDungChiTiết: item[3],
             };
           })
@@ -178,7 +178,7 @@ const Main = () => {
             return {
               ID: item[0],
               NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[2],
+              SốTiềnChuyển: item[2]+ " " + "đ",
               NộiDungChiTiết: item[3],
             };
           })
@@ -197,7 +197,7 @@ const Main = () => {
             return {
               ID: item[0],
               NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[2],
+              SốTiềnChuyển: item[2]+ " " + "đ",
               NộiDungChiTiết: item[3],
             };
           })
@@ -216,7 +216,7 @@ const Main = () => {
             return {
               ID: item[0],
               NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[2],
+              SốTiềnChuyển: item[2]+ " " + "đ",
               NộiDungChiTiết: item[3],
             };
           })
@@ -248,7 +248,7 @@ const Main = () => {
             return {
               ID: index+1,
               NgàyGiaoDịch: day,
-              SốTiềnChuyển: item[2],
+              SốTiềnChuyển: item[2] + " " + "đ",
               NộiDungChiTiết: item[1] + " " + item[3],
             };
           })
@@ -268,7 +268,7 @@ const Main = () => {
             return {
               ID: item[0],
               NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[3],
+              SốTiềnChuyển: item[3] + " " + "đ",
               NộiDungChiTiết: item[2] + " " + item[4],
             };
           })
@@ -287,8 +287,48 @@ const Main = () => {
             return {
               ID: item[0],
               NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: money[1],
+              SốTiềnChuyển: money[1] + " " + "đ",
               NộiDungChiTiết: item[2],
+            };
+          })
+          .filter((item) => item !== null);
+
+        setRowData(filteredData);
+      }
+      else if (value === "BIDV 10-17/9") {
+        setTotalByDate(dataVTB179);
+        setHighestMoney("10.460.780.225 VNĐ");
+        setLowestMoney("0 VNĐ");
+        const data = await import("../../output/BIDV1017.json");
+        const filteredData = data.default
+          .map((item) => {
+            // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
+            // const money = item[3].match(/^(-?\d+(?:\.\d+)?)(.*)$/);
+            return {
+              ID: item[0],
+              NgàyGiaoDịch: item[1],
+              SốTiềnChuyển: item[3] + " " + "đ",
+              NộiDungChiTiết: item[4] + " " + item[2],
+            };
+          })
+          .filter((item) => item !== null);
+
+        setRowData(filteredData);
+      }
+      else if (value === "BIDV 18-19/9") {
+        setTotalByDate(dataVTB179);
+        setHighestMoney("10.460.780.225 VNĐ");
+        setLowestMoney("0 VNĐ");
+        const data = await import("../../output/BIDV1819.json");
+        const filteredData = data.default
+          .map((item,index) => {
+            // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
+            // const money = item[3].match(/^(-?\d+(?:\.\d+)?)(.*)$/);
+            return {
+              ID: index+1,
+              NgàyGiaoDịch: "18/09/2024",
+              SốTiềnChuyển: item[2] + " " + "đ",
+              NộiDungChiTiết: item[3] + " " + item[1],
             };
           })
           .filter((item) => item !== null);
