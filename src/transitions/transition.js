@@ -95,6 +95,22 @@ async function main() {
     // data[i] = [id,day,data[i][1],data[i][2],data[i][3]];
     // console.log("ID: " + id);
     // console.log("Ngay: "+ "13/" + match[2]);
+    //tach chuoi bidv 1017
+    // if(data[i][4] === undefined)
+    // {
+    //   let originalString = data[i][3];
+    //   let amountMatch = originalString.match(/^\d{1,3}(?:\.\d{3})*(?:,\d{1,3})?/);
+    //   if (amountMatch) {
+    //     let amount = amountMatch[0]; 
+    //     let remainingString = originalString.substring(amount.length);  // Phần còn lại của chuỗi sau số tiền
+    //     data[i] = [data[i][0],data[i][1],data[i][2],amount,remainingString]; 
+    // }
+    // }
+    //tach chuoi bidv 1819
+    if(data[i][3] == undefined)
+    {
+      data[i] = [data[i][0]," ",data[i][1],data[i][2]];
+    }
     dataLuu.push(data[i]);
   }
 
