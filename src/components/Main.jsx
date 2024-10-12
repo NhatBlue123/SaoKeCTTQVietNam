@@ -26,7 +26,7 @@ import {
 } from "recharts";
 import "@mantine/charts/styles.css";
 const Main = () => {
-  const [value, setValue] = useState("VietComBank 1-10/9");
+  const [value, setValue] = useState("AgriBank 9-13/9");
   const [rowData, setRowData] = useState([]);
   const [totalByDates, setTotalByDate] = useState(dataVCB110);
   const [highestMoney, setHighestMoney] = useState("10.460.780.225 VNĐ");
@@ -45,10 +45,32 @@ const Main = () => {
               return {
                 ID: match[2],
                 NgàyGiaoDịch: match[1],
-                SốTiềnChuyển: item[1]+ " " + "đ",
+                SốTiềnChuyển: item[1] + " " + "đ",
                 NộiDungChiTiết: item[2],
               };
             }
+            return null;
+          })
+          .filter((item) => item !== null);
+
+        setRowData(filteredData);
+      }
+      if (value === "AgriBank 9-13/9") {
+        console.log("choose");
+        const data = await import("../../output/Agribank9-13.json");
+        setTotalByDate(dataVCB110);
+        setHighestMoney("10.460.780.225 VNĐ");
+        setLowestMoney("0 VNĐ");
+        const filteredData = data.default
+          .map((item) => {
+            // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
+              return {
+                ID: item[0] || "null", 
+                NgàyGiaoDịch: item[1],
+                SốTiềnChuyển: item[2] + " " + "đ",
+                NộiDungChiTiết: item[4],
+              };
+            
             return null;
           })
           .filter((item) => item !== null);
@@ -66,7 +88,7 @@ const Main = () => {
             return {
               ID: item[0],
               NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[2]+ " " + "đ",
+              SốTiềnChuyển: item[2] + " " + "đ",
               NộiDungChiTiết: item[3],
             };
           })
@@ -119,7 +141,7 @@ const Main = () => {
               return {
                 ID: ID,
                 NgàyGiaoDịch: `${day}/${match[2]}/${match[3]} ${match[4]}`,
-                SốTiềnChuyển: item[2]+ " " + "đ",
+                SốTiềnChuyển: item[2] + " " + "đ",
                 NộiDungChiTiết: item[1] + " " + item[3],
               };
             }
@@ -138,7 +160,7 @@ const Main = () => {
             return {
               ID: item[0],
               NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[3]+ " " + "đ",
+              SốTiềnChuyển: item[3] + " " + "đ",
               NộiDungChiTiết: item[2],
             };
           })
@@ -158,15 +180,14 @@ const Main = () => {
             return {
               ID: item[0],
               NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[2]+ " " + "đ",
+              SốTiềnChuyển: item[2] + " " + "đ",
               NộiDungChiTiết: item[3],
             };
           })
           .filter((item) => item !== null);
 
         setRowData(filteredData);
-      }
-       else if (value === "VietComBank 12-9") {
+      } else if (value === "VietComBank 12-9") {
         setTotalByDate(dataVCB119);
         setHighestMoney("10.460.780.225 VNĐ");
         setLowestMoney("0 VNĐ");
@@ -178,7 +199,7 @@ const Main = () => {
             return {
               ID: item[0],
               NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[2]+ " " + "đ",
+              SốTiềnChuyển: item[2] + " " + "đ",
               NộiDungChiTiết: item[3],
             };
           })
@@ -197,7 +218,7 @@ const Main = () => {
             return {
               ID: item[0],
               NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[2]+ " " + "đ",
+              SốTiềnChuyển: item[2] + " " + "đ",
               NộiDungChiTiết: item[3],
             };
           })
@@ -216,37 +237,33 @@ const Main = () => {
             return {
               ID: item[0],
               NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[2]+ " " + "đ",
+              SốTiềnChuyển: item[2] + " " + "đ",
               NộiDungChiTiết: item[3],
             };
           })
           .filter((item) => item !== null);
 
         setRowData(filteredData);
-      }else if (value === "VietTinBank 13-15/9") {
+      } else if (value === "VietTinBank 13-15/9") {
         setTotalByDate(dataBIDV112);
         setHighestMoney("2.000.000.000 VNĐ");
         setLowestMoney("1 VNĐ");
         const data = await import("../../output/VTBANK1315.json");
 
         const filteredData = data.default
-          .map((item,index) => {
+          .map((item, index) => {
             // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
             let day = "";
-            if(index+1 < 34583)
-            {
+            if (index + 1 < 34583) {
               day = "13/09/2024";
             }
-            if(index+1 >= 34583 && index < 81569)
-            {
+            if (index + 1 >= 34583 && index < 81569) {
               day = "14/09/2024";
-            }
-            else if(index+1 >= 81569)
-            {
+            } else if (index + 1 >= 81569) {
               day = "15/09/2024";
             }
             return {
-              ID: index+1,
+              ID: index + 1,
               NgàyGiaoDịch: day,
               SốTiềnChuyển: item[2] + " " + "đ",
               NộiDungChiTiết: item[1] + " " + item[3],
@@ -255,8 +272,7 @@ const Main = () => {
           .filter((item) => item !== null);
 
         setRowData(filteredData);
-      } 
-      else if (value === "VietTinBank 16-9") {
+      } else if (value === "VietTinBank 16-9") {
         setTotalByDate(dataVTB179);
         setHighestMoney("10.460.780.225 VNĐ");
         setLowestMoney("0 VNĐ");
@@ -294,8 +310,7 @@ const Main = () => {
           .filter((item) => item !== null);
 
         setRowData(filteredData);
-      }
-      else if (value === "BIDV 10-17/9") {
+      } else if (value === "BIDV 10-17/9") {
         setTotalByDate(dataVTB179);
         setHighestMoney("10.460.780.225 VNĐ");
         setLowestMoney("0 VNĐ");
@@ -314,19 +329,24 @@ const Main = () => {
           .filter((item) => item !== null);
 
         setRowData(filteredData);
-      }
-      else if (value === "BIDV 18-19/9") {
+      } else if (value === "BIDV 18-19/9") {
         setTotalByDate(dataVTB179);
         setHighestMoney("10.460.780.225 VNĐ");
         setLowestMoney("0 VNĐ");
         const data = await import("../../output/BIDV1819.json");
         const filteredData = data.default
-          .map((item,index) => {
+          .map((item, index) => {
             // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
             // const money = item[3].match(/^(-?\d+(?:\.\d+)?)(.*)$/);
+            let day = "";
+            if (index + 1 < 94) {
+              day = "18/09/2024";
+            } else {
+              day = "19/09/2024";
+            }
             return {
-              ID: index+1,
-              NgàyGiaoDịch: "18/09/2024",
+              ID: index + 1,
+              NgàyGiaoDịch: day,
               SốTiềnChuyển: item[2] + " " + "đ",
               NộiDungChiTiết: item[3] + " " + item[1],
             };

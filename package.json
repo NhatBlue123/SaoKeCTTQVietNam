@@ -18,6 +18,7 @@
     "@mantine/hooks": "^7.12.2",
     "@mantine/notifications": "^7.12.2",
     "ag-grid-react": "^32.2.0",
+    "csv-parse": "^5.5.6",
     "dayjs": "^1.11.13",
     "highcharts-react-official": "^3.2.1",
     "pdf-data-parser": "^1.2.15",

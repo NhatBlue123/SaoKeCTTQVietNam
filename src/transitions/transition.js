@@ -2,7 +2,7 @@ import fs from "fs";
 import { PdfDataParser } from "pdf-data-parser";
 
 async function main() {
-  const pdfPath = "../../data/MTTQ_BIDV_18-19.pdf";
+  const pdfPath = "../../output/agribank_1500201113838_09-09_to_09-12-2024.csv";
 
   let parser = new PdfDataParser({
     url: pdfPath,
@@ -29,7 +29,7 @@ async function main() {
     "Số 77, Phố Lạc Trung, Quận Hai Bà Trưng, TP Hà Nội"
   ];
   const data = [];
-  for (let i = 9; i < rows.length; i++) {
+  for (let i = 0; i < 100; i++) {
     let rowString = JSON.stringify(rows[i]);
     if (!Array.isArray(rows[i]) || !rows[i]) {
       continue;
@@ -107,14 +107,14 @@ async function main() {
     // }
     // }
     //tach chuoi bidv 1819
-    if(data[i][3] == undefined)
-    {
-      data[i] = [data[i][0]," ",data[i][1],data[i][2]];
-    }
+    // if(data[i][3] == undefined)
+    // {
+    //   data[i] = [data[i][0]," ",data[i][1],data[i][2]];
+    // }
     dataLuu.push(data[i]);
   }
 
-  saveTransitison(dataLuu, "../../output/BIDV1819.json");
+  saveTransitison(dataLuu, "../../output/test.json");
 }
 main();
 
