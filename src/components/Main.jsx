@@ -14,6 +14,10 @@ import {
   dataVTB1012,
   dataVCB119,
   dataVTB179,
+  dataAgibank913,
+  dataVTB169,
+  dataBIDV1017,
+  dataBIDV1819
 } from "../data/TotalByDates";
 import {
   BarChart,
@@ -56,11 +60,10 @@ const Main = () => {
         setRowData(filteredData);
       }
       if (value === "AgriBank 9-13/9") {
-        console.log("choose");
         const data = await import("../../output/Agribank9-13.json");
-        setTotalByDate(dataVCB110);
-        setHighestMoney("10.460.780.225 VNĐ");
-        setLowestMoney("0 VNĐ");
+        setTotalByDate(dataAgibank913);
+        setHighestMoney("800.000.000 VNĐ");
+        setLowestMoney("1.000 VNĐ");
         const filteredData = data.default
           .map((item) => {
             // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
@@ -273,8 +276,8 @@ const Main = () => {
 
         setRowData(filteredData);
       } else if (value === "VietTinBank 16-9") {
-        setTotalByDate(dataVTB179);
-        setHighestMoney("10.460.780.225 VNĐ");
+        setTotalByDate(dataVTB169);
+        setHighestMoney("4.000.000.000 VNĐ");
         setLowestMoney("0 VNĐ");
         const data = await import("../../output/VTBANK169.json");
         const filteredData = data.default
@@ -293,7 +296,7 @@ const Main = () => {
         setRowData(filteredData);
       } else if (value === "VietTinBank 17-9") {
         setTotalByDate(dataVTB179);
-        setHighestMoney("10.460.780.225 VNĐ");
+        setHighestMoney("3.500.000.000 VNĐ");
         setLowestMoney("0 VNĐ");
         const data = await import("../../output/VTBANK179.json");
         const filteredData = data.default
@@ -311,9 +314,9 @@ const Main = () => {
 
         setRowData(filteredData);
       } else if (value === "BIDV 10-17/9") {
-        setTotalByDate(dataVTB179);
-        setHighestMoney("10.460.780.225 VNĐ");
-        setLowestMoney("0 VNĐ");
+        setTotalByDate(dataBIDV1017);
+        setHighestMoney("200.000.000 VNĐ");
+        setLowestMoney("1 VNĐ");
         const data = await import("../../output/BIDV1017.json");
         const filteredData = data.default
           .map((item) => {
@@ -330,9 +333,9 @@ const Main = () => {
 
         setRowData(filteredData);
       } else if (value === "BIDV 18-19/9") {
-        setTotalByDate(dataVTB179);
-        setHighestMoney("10.460.780.225 VNĐ");
-        setLowestMoney("0 VNĐ");
+        setTotalByDate(dataBIDV1819);
+        setHighestMoney("2.000.000.000 VNĐ");
+        setLowestMoney("900 VNĐ");
         const data = await import("../../output/BIDV1819.json");
         const filteredData = data.default
           .map((item, index) => {
