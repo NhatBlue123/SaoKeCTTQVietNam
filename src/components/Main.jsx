@@ -2,11 +2,6 @@ import React, { useEffect, useState, Suspense } from "react";
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 import "ag-grid-community/styles/ag-theme-quartz.css";
-// import jsonData from "../../output/VCBANK110.json";
-// import jsonDataVTB from "../../output/VTBANK1012.json";
-// import jsonDataVCB1012 from "../../output/VCB1012New.json";
-// import jsonDataBIDV112 from "../../output/BIDV112.json";
-// import jsonDataVCB119 from "../../output/VCB119.json";
 import {
   dataVCB110,
   dataVCB1012,
