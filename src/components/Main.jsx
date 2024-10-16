@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 import "ag-grid-community/styles/ag-theme-quartz.css";
@@ -23,7 +23,6 @@ import {
   Legend,
   CartesianGrid,
 } from "recharts";
-import "@mantine/charts/styles.css";
 const Main = () => {
   const [value, setValue] = useState("AgriBank 9-13/9");
   const [rowData, setRowData] = useState([]);
