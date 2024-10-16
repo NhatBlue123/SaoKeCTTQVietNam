@@ -11,9 +11,6 @@
   },
   "dependencies": {
     "ag-grid-react": "^32.2.0",
-    "csv-parse": "^5.5.6",
-    "dayjs": "^1.11.13",
-    "highcharts-react-official": "^3.2.1",
     "pdf-data-parser": "^1.2.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -32,7 +29,6 @@
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
     "postcss": "^8.4.47",
-    "postcss-preset-mantine": "^1.17.0",
     "postcss-simple-vars": "^7.0.1",
     "tailwindcss": "^3.4.13",
     "vite": "^5.4.1"
