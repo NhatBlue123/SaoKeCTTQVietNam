@@ -8,6 +8,7 @@
   --secondary-text: #232738;
   --primary-color: #3a435d;
   --accent-color: #0071ff;
+  --shadow: none;
 }
 .darkmode{
   --base-color: #070b1d;
@@ -16,6 +17,7 @@
   --secondary-text: #a4a5b8;
   --primary-color: #3a435d;
   --accent-color: #0071ff;
+  --shadow: 0 0 10px cyan, 0 0 20px cyan, 0 0 40px cyan, 0 0 80px cyan;
 }
 body{
     min-height: 100vh;
@@ -25,7 +27,12 @@ body{
 p{
     margin: 10px 0 20px 0;
     color: var(--secondary-text);
+    text-shadow: var(--shadow);
   }
+h2{
+   color: var(--secondary-text);
+   text-shadow: var(--shadow);
+}
 #select-banks{
   background-color: var(--base-color);
 }
