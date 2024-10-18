@@ -40,6 +40,7 @@ const Main = () => {
           const filteredData = results.data
             .map((item) => ({
               ID: item.id || "null",
+              Bank: item.bank || "null",
               NgàyGiaoDịch: item.date,
               SốTiềnChuyển: item.money + " " + "đ",
               NộiDungChiTiết: item.desc,
@@ -64,6 +65,7 @@ const Main = () => {
             if (match) {
               return {
                 ID: match[2],
+                Bank: "VietTinBank",
                 NgàyGiaoDịch: match[1],
                 SốTiềnChuyển: item[1] + " " + "đ",
                 NộiDungChiTiết: item[2],
@@ -77,15 +79,18 @@ const Main = () => {
       }
       else if (value === "AgriBank") {
         console.log("Agri");
+        let tongGiaoDich = 0;
         const data = await import("../../output/Agribank9-13.json");
         setTotalByDate(dataAgibank913);
         setHighestMoney("800.000.000 VNĐ");
         setLowestMoney("1.000 VNĐ");
         const filteredData = data.default
-          .map((item) => {
+          .map((item,index) => {
             // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
+            tongGiaoDich +=1; 
               return {
                 ID: item[0] || "null", 
+                Bank: "ArgiBank",
                 NgàyGiaoDịch: item[1],
                 SốTiềnChuyển: item[2] + " " + "đ",
                 NộiDungChiTiết: item[4],
@@ -93,7 +98,7 @@ const Main = () => {
             
           })
           .filter((item) => item !== null);
-
+        console.log(tongGiaoDich);
         setRowData(filteredData);
       } else if (value === "VietComBank") {
         console.log("VietCom");
@@ -107,6 +112,7 @@ const Main = () => {
 
             return {
               ID: item[0],
+              Bank: "VietComBank",
               NgàyGiaoDịch: item[1],
               SốTiềnChuyển: item[2] + " " + "đ",
               NộiDungChiTiết: item[3],
@@ -127,6 +133,7 @@ const Main = () => {
             // const money = item[3].match(/^(-?\d+(?:\.\d+)?)(.*)$/);
             return {
               ID: item[0],
+              Bank: "BIDV",
               NgàyGiaoDịch: item[1],
               SốTiềnChuyển: item[3] + " " + "đ",
               NộiDungChiTiết: item[4] + " " + item[2],
@@ -143,11 +150,12 @@ const Main = () => {
 
   const pagination = true;
   const paginationPageSize = 30;
-  const paginationPageSizeSelector = [100, 200, 500];
+  const paginationPageSizeSelector = [100, 200, 500,2000,50000,100000];
 
   // Column Definitions: Defines the columns to be displayed.
   const [colDefs] = useState([
     { field: "ID", filter: true, floatingFilter: true },
+    { field: "Bank", floatingFilter: true },
     { field: "NgàyGiaoDịch", filter: true, floatingFilter: true },
     { field: "SốTiềnChuyển", filter: true, floatingFilter: true },
     { field: "NộiDungChiTiết", flex: 4, filter: true, floatingFilter: true },
