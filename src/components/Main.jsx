@@ -3,7 +3,7 @@ import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import Papa from "papaparse"; // Import PapaParse for CSV parsing
-
+import fs from "fs";
 import {
   dataVCB110,
   dataVCB1012,
@@ -55,51 +55,52 @@ const Main = () => {
     const fetchData = async () => {
       if (value === "VietTinBank") {
         console.log("VietTin");
-        const data = await import("../../output/VCBANK110.json");
         setTotalByDate(dataVCB110);
         setHighestMoney("10.460.780.225 VNĐ");
         setLowestMoney("0 VNĐ");
-        const filteredData = data.default
-          .map((item) => {
-            const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
-            if (match) {
-              return {
-                ID: match[2],
-                Bank: "VietTinBank",
-                NgàyGiaoDịch: match[1],
-                SốTiềnChuyển: item[1] + " " + "đ",
-                NộiDungChiTiết: item[2],
-              };
-            }
-            return null;
-          })
-          .filter((item) => item !== null);
-
-        setRowData(filteredData);
+        const response = await fetch('../../output/Vietin.csv');
+        const csvText = await response.text();
+        Papa.parse(csvText, {
+          header: true, // Giữ header của file CSV
+          complete: function (results) {
+            const filteredData = results.data
+              .map((item) => ({
+                ID: item.id || "null",
+                Bank: item.bank || "null",
+                NgàyGiaoDịch: item.date,
+                SốTiềnChuyển: item.money + " " + "đ",
+                NộiDungChiTiết: item.desc,
+              }))
+              .filter((item) => item.ID !== "null");
+            setRowData(filteredData);
+          },
+        });
       }
       else if (value === "AgriBank") {
         console.log("Agri");
         let tongGiaoDich = 0;
-        const data = await import("../../output/Agribank9-13.json");
+        const response = await fetch('../../output/Agri.csv');
+        const csvText = await response.text();
         setTotalByDate(dataAgibank913);
         setHighestMoney("800.000.000 VNĐ");
         setLowestMoney("1.000 VNĐ");
-        const filteredData = data.default
-          .map((item,index) => {
-            // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
-            tongGiaoDich +=1; 
-              return {
-                ID: item[0] || "null", 
-                Bank: "ArgiBank",
-                NgàyGiaoDịch: item[1],
-                SốTiềnChuyển: item[2] + " " + "đ",
-                NộiDungChiTiết: item[4],
-              };
-            
-          })
-          .filter((item) => item !== null);
+        Papa.parse(csvText, {
+          header: true,
+          complete: function (results) {
+            const filteredData = results.data
+              .map((item) => ({
+                ID: item.id || "null",
+                Bank: item.bank || "null",
+                NgàyGiaoDịch: item.date,
+                SốTiềnChuyển: item.money + " " + "đ",
+                NộiDungChiTiết: item.desc,
+              }))
+              .filter((item) => item.ID !== "null");
+            setRowData(filteredData);
+          },
+        });
         console.log(tongGiaoDich);
-        setRowData(filteredData);
+        // setRowData(filteredData.data);
       } else if (value === "VietComBank") {
         console.log("VietCom");
         setTotalByDate(dataVCB119);
@@ -108,7 +109,6 @@ const Main = () => {
         const data = await import("../../output/VCB149.json");
         const filteredData = data.default
           .map((item) => {
-            // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
 
             return {
               ID: item[0],
@@ -126,22 +126,23 @@ const Main = () => {
         setTotalByDate(dataBIDV1017);
         setHighestMoney("200.000.000 VNĐ");
         setLowestMoney("1 VNĐ");
-        const data = await import("../../output/BIDV1017.json");
-        const filteredData = data.default
-          .map((item) => {
-            // const match = item[0].match(/^(\d{2}\/\d{2}\/\d{4})\s+([0-9.]+)$/);
-            // const money = item[3].match(/^(-?\d+(?:\.\d+)?)(.*)$/);
-            return {
-              ID: item[0],
-              Bank: "BIDV",
-              NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[3] + " " + "đ",
-              NộiDungChiTiết: item[4] + " " + item[2],
-            };
-          })
-          .filter((item) => item !== null);
-
-        setRowData(filteredData);
+        const response = await fetch('../../output/BIDV.csv');
+        const csvText = await response.text();
+        Papa.parse(csvText, {
+          header: true, // Giữ header của file CSV
+          complete: function (results) {
+            const filteredData = results.data
+              .map((item) => ({
+                ID: item.id || "null",
+                Bank: item.bank || "null",
+                NgàyGiaoDịch: item.date,
+                SốTiềnChuyển: item.money + " " + "đ",
+                NộiDungChiTiết: item.desc,
+              }))
+              .filter((item) => item.ID !== "null");
+            setRowData(filteredData);
+          },
+        });
       }
     };
 
