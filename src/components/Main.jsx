@@ -6,8 +6,7 @@ import Papa from "papaparse"; // Import PapaParse for CSV parsing
 import fs from "fs";
 import {
   VietTinBank,
-  dataVCB119,
-  dataVCB110,
+  VCB,
   AgriBank,
   BIDV,
 } from "../data/TotalByDates";
@@ -23,9 +22,9 @@ import {
 const Main = () => {
   const [value, setValue] = useState("AgriBank");
   const [rowData, setRowData] = useState([]);
-  const [totalByDates, setTotalByDate] = useState(dataVCB110);
-  const [highestMoney, setHighestMoney] = useState("10.460.780.225 VNĐ");
-  const [lowestMoney, setLowestMoney] = useState("0 VND");
+  const [totalByDates, setTotalByDate] = useState(AgriBank);
+  const [highestMoney, setHighestMoney] = useState("800.000.000 VND");
+  const [lowestMoney, setLowestMoney] = useState("1.000 VND");
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -53,7 +52,7 @@ const Main = () => {
         console.log("VietTin");
         setTotalByDate(VietTinBank);
         setHighestMoney("5.000.000.000");
-        setLowestMoney("0 VNĐ");
+        setLowestMoney("0 VND");
         const response = await fetch("../../output/Vietin.csv");
         const csvText = await response.text();
         Papa.parse(csvText, {
@@ -77,8 +76,8 @@ const Main = () => {
         const response = await fetch("../../output/Agri.csv");
         const csvText = await response.text();
         setTotalByDate(AgriBank);
-        setHighestMoney("800.000.000 VNĐ");
-        setLowestMoney("1.000 VNĐ");
+        setHighestMoney("800.000.000 VND");
+        setLowestMoney("1.000 VND");
         Papa.parse(csvText, {
           header: true,
           complete: function (results) {
@@ -98,28 +97,31 @@ const Main = () => {
         // setRowData(filteredData.data);
       } else if (value === "VietComBank") {
         console.log("VietCom");
-        setTotalByDate(dataVCB119);
-        setHighestMoney("10.460.780.225 VNĐ");
-        setLowestMoney("0 VNĐ");
-        const data = await import("../../output/VCB149.json");
-        const filteredData = data.default
-          .map((item) => {
-            return {
-              ID: item[0],
-              Bank: "VietComBank",
-              NgàyGiaoDịch: item[1],
-              SốTiềnChuyển: item[2] + " " + "đ",
-              NộiDungChiTiết: item[3],
-            };
-          })
-          .filter((item) => item !== null);
-
-        setRowData(filteredData);
+        setTotalByDate(VCB);
+        setHighestMoney("10.460.780.225 VND");
+        setLowestMoney("0 VND");
+        const response = await fetch("../../output/VCB.csv");
+        const csvText = await response.text();
+        Papa.parse(csvText, {
+          header: true, // Giữ header của file CSV
+          complete: function (results) {
+            const filteredData = results.data
+              .map((item) => ({
+                ID: item.id || "null",
+                Bank: item.bank || "null",
+                NgàyGiaoDịch: item.date,
+                SốTiềnChuyển: item.money + " " + "đ",
+                NộiDungChiTiết: item.desc,
+              }))
+              .filter((item) => item.ID !== "null");
+            setRowData(filteredData);
+          },
+        });
       } else if (value === "BIDV") {
         console.log("BIDV");
         setTotalByDate(BIDV);
-        setHighestMoney("2.000.000.000 VNĐ");
-        setLowestMoney("1 VNĐ");
+        setHighestMoney("2.000.000.000 VND");
+        setLowestMoney("1 VND");
         const response = await fetch("../../output/BIDV.csv");
         const csvText = await response.text();
         Papa.parse(csvText, {
@@ -152,10 +154,8 @@ const Main = () => {
     localStorage.setItem("darkmode", "active");
     const agGridElement = document.getElementsByClassName("ag-theme-quartz")[0];
 
-    // Kiểm tra nếu phần tử tồn tại
     if (agGridElement) {
-      // Thiết lập các biến CSS cho chế độ tối
-      agGridElement.style.setProperty("--ag-foreground-color","white");
+      agGridElement.style.setProperty("--ag-foreground-color", "white");
       agGridElement.style.setProperty(
         "--ag-background-color",
         "var(--base-variant)"
@@ -181,16 +181,16 @@ const Main = () => {
     localStorage.setItem("darkmode", null);
     const agGridElement = document.getElementsByClassName("ag-theme-quartz")[0];
 
-  // Kiểm tra nếu phần tử tồn tại
-  if (agGridElement) {
-    // Xóa toàn bộ các biến CSS đã áp dụng khi bật dark mode
-    agGridElement.style.removeProperty('--ag-foreground-color');
-    agGridElement.style.removeProperty('--ag-background-color');
-    agGridElement.style.removeProperty('--ag-header-foreground-color');
-    agGridElement.style.removeProperty('--ag-header-background-color');
-    agGridElement.style.removeProperty('--ag-odd-row-background-color');
-    agGridElement.style.removeProperty('--ag-header-column-resize-handle-color');
-  }
+    if (agGridElement) {
+      agGridElement.style.removeProperty("--ag-foreground-color");
+      agGridElement.style.removeProperty("--ag-background-color");
+      agGridElement.style.removeProperty("--ag-header-foreground-color");
+      agGridElement.style.removeProperty("--ag-header-background-color");
+      agGridElement.style.removeProperty("--ag-odd-row-background-color");
+      agGridElement.style.removeProperty(
+        "--ag-header-column-resize-handle-color"
+      );
+    }
   };
 
   if (darkmode === "active") enableDarkmode();
