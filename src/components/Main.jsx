@@ -53,7 +53,7 @@ const Main = () => {
         setTotalByDate(VietTinBank);
         setHighestMoney("5.000.000.000");
         setLowestMoney("0 VND");
-        const response = await fetch("../../output/Vietin.csv");
+        const response = await fetch("/public/Vietin.csv");
         const csvText = await response.text();
         Papa.parse(csvText, {
           header: true, // Giữ header của file CSV
@@ -73,7 +73,7 @@ const Main = () => {
       } else if (value === "AgriBank") {
         console.log("Agri");
         let tongGiaoDich = 0;
-        const response = await fetch("../../output/Agri.csv");
+        const response = await fetch("/public/Agri.csv");
         const csvText = await response.text();
         setTotalByDate(AgriBank);
         setHighestMoney("800.000.000 VND");
@@ -100,7 +100,7 @@ const Main = () => {
         setTotalByDate(VCB);
         setHighestMoney("10.460.780.225 VND");
         setLowestMoney("0 VND");
-        const response = await fetch("../../output/VCB.csv");
+        const response = await fetch("/public/VCB.csv");
         const csvText = await response.text();
         Papa.parse(csvText, {
           header: true, // Giữ header của file CSV
@@ -122,7 +122,7 @@ const Main = () => {
         setTotalByDate(BIDV);
         setHighestMoney("2.000.000.000 VND");
         setLowestMoney("1 VND");
-        const response = await fetch("../../output/BIDV.csv");
+        const response = await fetch("/public/BIDV.csv");
         const csvText = await response.text();
         Papa.parse(csvText, {
           header: true, // Giữ header của file CSV
