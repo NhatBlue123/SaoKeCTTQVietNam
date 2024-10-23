@@ -1,0 +1,4 @@
+*.csv filter=lfs diff=lfs merge=lfs -text
+public/Agri.csv !text !filter !merge !diff
+public/BIDV.csv !text !filter !merge !diff
+public/Vietin.csv !text !filter !merge !diff

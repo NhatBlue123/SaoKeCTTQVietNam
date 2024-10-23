@@ -2,3 +2,5 @@
 public/Agri.csv !text !filter !merge !diff
 public/BIDV.csv !text !filter !merge !diff
 public/Vietin.csv !text !filter !merge !diff
+public/VCB_1-11.csv !text !filter !merge !diff
+public/VCB_12-14.csv !text !filter !merge !diff
