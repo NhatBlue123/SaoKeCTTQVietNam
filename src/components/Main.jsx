@@ -95,12 +95,12 @@ const Main = () => {
         });
         console.log(tongGiaoDich);
         // setRowData(filteredData.data);
-      } else if (value === "VietComBank") {
+      } else if (value === "VietComBank 1-11") {
         console.log("VietCom");
         setTotalByDate(VCB);
         setHighestMoney("10.460.780.225 VND");
         setLowestMoney("0 VND");
-        const response = await fetch("/VCB.csv");
+        const response = await fetch("/VCB_1-11.csv");
         const csvText = await response.text();
         Papa.parse(csvText, {
           header: true, // Giữ header của file CSV
@@ -117,7 +117,30 @@ const Main = () => {
             setRowData(filteredData);
           },
         });
-      } else if (value === "BIDV") {
+      }else if (value === "VietComBank 12-14") {
+        console.log("VietCom");
+        setTotalByDate(VCB);
+        setHighestMoney("10.460.780.225 VND");
+        setLowestMoney("0 VND");
+        const response = await fetch("/VCB_12-14.csv");
+        const csvText = await response.text();
+        Papa.parse(csvText, {
+          header: true, // Giữ header của file CSV
+          complete: function (results) {
+            const filteredData = results.data
+              .map((item) => ({
+                ID: item.id || "null",
+                Bank: item.bank || "null",
+                NgàyGiaoDịch: item.date,
+                SốTiềnChuyển: item.money + " " + "đ",
+                NộiDungChiTiết: item.desc,
+              }))
+              .filter((item) => item.ID !== "null");
+            setRowData(filteredData);
+          },
+        });
+      } 
+       else if (value === "BIDV") {
         console.log("BIDV");
         setTotalByDate(BIDV);
         setHighestMoney("2.000.000.000 VND");
@@ -253,7 +276,8 @@ const Main = () => {
             onChange={(event) => setValue(event.currentTarget.value)}
           >
             <option>AgriBank</option>
-            <option>VietComBank</option>
+            <option>VietComBank 1-11</option>
+            <option>VietComBank 12-14</option>
             <option>VietTinBank</option>
             <option>BIDV</option>
           </select>
