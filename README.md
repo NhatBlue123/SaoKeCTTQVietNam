@@ -9,4 +9,4 @@ Currently, two official plugins are available:
 
 # Demo
 Link: https://sao-ke-cttq-viet-nam-blue.vercel.app/
-...VietComBank is updating...
+
